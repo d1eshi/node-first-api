@@ -1,15 +1,12 @@
 let Favs = [
 	{
-		id: 1,
-		username: 'd1eshi',
-		favs: ['Camilucha', 'React'],
-	},
-	{
 		id: 2,
 		username: 'Camilucha',
 		favs: ['d1eshi', 'coke'],
 	},
 ]
+const mongoose = require('mongoose')
+const Fav = require('./models/Fav.js')
 
 const createId = () => {
 	const ids = Favs.map(fav => fav.id)
@@ -19,7 +16,10 @@ const createId = () => {
 
 // GET
 exports.getFavs = (req, res) => {
-	res.json(Favs)
+	Fav.find({}).then(favs => {
+		res.json(favs)
+		mongoose.connection.close()
+	})
 }
 
 // DELETE
